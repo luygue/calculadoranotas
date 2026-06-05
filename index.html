@@ -4,184 +4,314 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora de Nota da Faculdade</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
       margin: 0;
-      padding: 20px;
-      color: #222;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #f8fafc);
+      color: #111827;
+      padding: 24px;
     }
 
     .container {
-      max-width: 520px;
-      margin: auto;
-      background: #fff;
-      padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      max-width: 620px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+    }
+
+    .topo {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 22px;
-      margin-top: 0;
-      text-align: center;
+      font-size: 28px;
+      margin: 0;
+      color: #0f172a;
     }
 
-    p {
-      line-height: 1.45;
+    .subtitulo {
+      margin-top: 10px;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .formula {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .formula b {
+      color: #1e40af;
     }
 
     label {
       display: block;
-      margin-top: 14px;
+      margin-top: 16px;
+      margin-bottom: 7px;
       font-weight: bold;
+      color: #1f2937;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
+      padding: 15px;
+      font-size: 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      outline: none;
+      transition: 0.2s;
+      background: #ffffff;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    .botoes {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 22px;
     }
 
     button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 18px;
       border: none;
-      border-radius: 8px;
+      border-radius: 14px;
+      padding: 15px;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      background: #2563eb;
-      color: white;
+      transition: 0.2s;
     }
 
-    button.secondary {
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-calcular {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .btn-limpar {
       background: #64748b;
-      margin-top: 10px;
+      color: #ffffff;
     }
 
     .resultado {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      background: #f1f5f9;
-      line-height: 1.6;
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      line-height: 1.65;
       font-size: 16px;
     }
 
+    .resultado h2 {
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+
     .aprovado {
-      color: #15803d;
-      font-weight: bold;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+
+    .exame {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
     }
 
     .reprovado {
-      color: #b91c1c;
-      font-weight: bold;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
     }
 
-    .alerta {
-      color: #b45309;
-      font-weight: bold;
+    .neutro {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #111827;
     }
 
-    .formula {
-      background: #eef2ff;
-      padding: 12px;
-      border-radius: 8px;
+    .status {
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: bold;
       margin-top: 12px;
-      font-size: 14px;
-      line-height: 1.6;
+    }
+
+    .linha {
+      margin: 6px 0;
+    }
+
+    .destaque {
+      font-weight: bold;
+      color: #0f172a;
     }
 
     small {
       display: block;
-      margin-top: 14px;
-      color: #555;
-      line-height: 1.4;
+      margin-top: 18px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>Calculadora de Nota da Faculdade</h1>
-
-    <p>Preencha as notas que você já tem. A calculadora usa a regra:</p>
+    <div class="topo">
+      <div class="badge">Calculadora de Média</div>
+      <h1>Nota da Faculdade</h1>
+      <p class="subtitulo">
+        Preencha as notas que você já tem. Pode deixar em branco a nota que ainda não saiu.
+      </p>
+    </div>
 
     <div class="formula">
-      N2 = (Parcial N2 + Institucional N2) ÷ 2<br>
-      Média Final = (N1 + N2) ÷ 2<br><br>
-
-      Média 6,00 ou maior: aprovado direto.<br>
-      Média de 5,00 até 5,99: vai para o Exame Final.<br>
-      Média abaixo de 5,00: reprovado automaticamente.
+      <b>N2</b> = (Parcial N2 + Institucional N2) ÷ 2<br>
+      <b>Média Final</b> = (N1 + N2) ÷ 2<br><br>
+      <b>6,00 ou mais:</b> aprovado direto<br>
+      <b>5,00 até 5,99:</b> exame final<br>
+      <b>Abaixo de 5,00:</b> reprovado automaticamente
     </div>
 
     <label for="n1">Nota N1</label>
-    <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 7.5">
+    <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 8">
 
     <label for="parcial">Nota da Parcial N2</label>
-    <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 6">
+    <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 7">
 
     <label for="institucional">Nota Institucional N2</label>
     <input type="number" id="institucional" step="0.01" min="0" max="10" placeholder="Ex: 8">
 
-    <button onclick="calcular()">Calcular</button>
-    <button class="secondary" onclick="limpar()">Limpar</button>
+    <div class="botoes">
+      <button class="btn-calcular" onclick="calcular()">Calcular</button>
+      <button class="btn-limpar" onclick="limpar()">Limpar</button>
+    </div>
 
-    <div id="resultado" class="resultado">
+    <div id="resultado" class="resultado neutro">
       Digite suas notas e clique em calcular.
     </div>
 
     <small>
-      Observação: se você ainda não souber alguma nota da N2, a calculadora mostra quanto você precisa tirar para passar direto ou, pelo menos, ir para o Exame Final.
+      A calculadora considera que notas em branco ainda não foram feitas ou ainda não saíram.
     </small>
   </div>
 
   <script>
     function numero(valor) {
-      if (valor === "" || valor === null || isNaN(parseFloat(valor))) return null;
-      return parseFloat(valor.replace(",", "."));
+      if (valor === "" || valor === null || valor === undefined) return null;
+      const convertido = parseFloat(String(valor).replace(",", "."));
+      return isNaN(convertido) ? null : convertido;
     }
 
     function fmt(n) {
       return Number(n).toFixed(2).replace(".", ",");
     }
 
-    function validar(n) {
+    function validarNota(n) {
       return n === null || (n >= 0 && n <= 10);
     }
 
-    function statusFinal(media) {
+    function definirClasseResultado(classe) {
+      const res = document.getElementById("resultado");
+      res.className = "resultado " + classe;
+    }
+
+    function mostrarErro(mensagem) {
+      definirClasseResultado("reprovado");
+      document.getElementById("resultado").innerHTML = `
+        <h2>Atenção</h2>
+        <div>${mensagem}</div>
+      `;
+    }
+
+    function calcularStatus(media) {
       if (media >= 6) {
-        return `<span class="aprovado">APROVADO DIRETO: sua média ficou ${fmt(media)}.</span>`;
+        return {
+          classe: "aprovado",
+          titulo: "Aprovado direto",
+          mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Você está aprovado direto.`
+        };
       }
 
-      if (media >= 5 && media < 6) {
-        return `<span class="alerta">EXAME FINAL: sua média ficou ${fmt(media)}. Você não passou direto, mas também não reprovou automaticamente.</span>`;
+      if (media >= 5) {
+        return {
+          classe: "exame",
+          titulo: "Exame final",
+          mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Você vai para o Exame Final.`
+        };
       }
 
-      return `<span class="reprovado">REPROVADO AUTOMATICAMENTE: sua média ficou ${fmt(media)}. Para ir ao Exame Final, precisava ficar com pelo menos 5,00.</span>`;
+      return {
+        classe: "reprovado",
+        titulo: "Reprovado automaticamente",
+        mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Como ficou abaixo de 5,00, você está reprovado automaticamente.`
+      };
     }
 
     function calcular() {
       const n1 = numero(document.getElementById("n1").value);
       const parcial = numero(document.getElementById("parcial").value);
-      const inst = numero(document.getElementById("institucional").value);
+      const institucional = numero(document.getElementById("institucional").value);
       const res = document.getElementById("resultado");
 
-      if (!validar(n1) || !validar(parcial) || !validar(inst)) {
-        res.innerHTML = "<span class='reprovado'>Digite apenas notas entre 0 e 10.</span>";
+      if (!validarNota(n1) || !validarNota(parcial) || !validarNota(institucional)) {
+        mostrarErro("Digite apenas notas entre 0 e 10.");
         return;
       }
 
       if (n1 === null) {
-        res.innerHTML = "<span class='alerta'>Digite pelo menos a nota da N1 para calcular quanto precisa.</span>";
+        mostrarErro("Digite pelo menos a nota N1 para calcular.");
         return;
       }
 
@@ -190,147 +320,174 @@
       const n2ParaPassar = 12 - n1;
       const n2ParaExame = 10 - n1;
 
-      html += `<b>Com N1 = ${fmt(n1)}</b><br>`;
-
-      if (n2ParaPassar <= 0) {
-        html += `Você já tem média suficiente para passar direto mesmo com N2 igual a 0.<br>`;
-      } else if (n2ParaPassar > 10) {
-        html += `Mesmo tirando 10,00 na N2, você não consegue passar direto.<br>`;
-      } else {
-        html += `Para passar direto, sua <b>N2 final precisa ser pelo menos ${fmt(n2ParaPassar)}</b>.<br>`;
-      }
-
-      if (n2ParaExame <= 0) {
-        html += `Mesmo com N2 igual a 0, você já fica com média suficiente para, no mínimo, ir ao Exame Final.<br><br>`;
-      } else if (n2ParaExame > 10) {
-        html += `Mesmo tirando 10,00 na N2, você não alcança média 5,00 para ir ao Exame Final.<br><br>`;
-      } else {
-        html += `Para pelo menos ir ao Exame Final, sua <b>N2 final precisa ser pelo menos ${fmt(n2ParaExame)}</b>.<br><br>`;
-      }
-
-      if (parcial !== null && inst !== null) {
-        const n2 = (parcial + inst) / 2;
+      if (parcial !== null && institucional !== null) {
+        const n2 = (parcial + institucional) / 2;
         const media = (n1 + n2) / 2;
+        const status = calcularStatus(media);
 
-        html += `<b>N2 calculada:</b> (${fmt(parcial)} + ${fmt(inst)}) ÷ 2 = <b>${fmt(n2)}</b><br>`;
-        html += `<b>Média final:</b> (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <b>${fmt(media)}</b><br><br>`;
+        definirClasseResultado(status.classe);
 
-        html += statusFinal(media);
+        html += `<h2>${status.titulo}</h2>`;
+        html += `<div class="linha">N2 = (${fmt(parcial)} + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2)}</span></div>`;
+        html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <span class="destaque">${fmt(media)}</span></div>`;
+        html += `<div class="status ${status.classe}">${status.mensagem}</div>`;
 
-      } else if (parcial !== null && inst === null) {
-        const instParaPassar = (2 * n2ParaPassar) - parcial;
-        const instParaExame = (2 * n2ParaExame) - parcial;
-
-        const n2ComInstZero = (parcial + 0) / 2;
-        const mediaComInstZero = (n1 + n2ComInstZero) / 2;
-
-        html += `Como você já tem Parcial N2 = ${fmt(parcial)}:<br>`;
-
-        if (instParaPassar <= 0) {
-          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 na Institucional N2, sua média final fica ${fmt(mediaComInstZero)}.</span><br>`;
-          html += `Ou seja, considerando nota 0 na Institucional N2, você já passa direto.<br><br>`;
-        } else if (instParaPassar > 10) {
-          html += `Mesmo tirando 10,00 na Institucional N2, você não passa direto.<br>`;
-        } else {
-          html += `Para passar direto, precisa tirar pelo menos <b>${fmt(instParaPassar)}</b> na Institucional N2.<br>`;
-        }
-
-        if (instParaExame <= 0) {
-          html += `Você também já garante pelo menos o Exame Final mesmo tirando 0 na Institucional N2.<br><br>`;
-        } else if (instParaExame > 10) {
-          html += `Mesmo tirando 10,00 na Institucional N2, você não alcança média 5,00.<br><br>`;
-        } else {
-          html += `Para pelo menos ir ao Exame Final, precisa tirar pelo menos <b>${fmt(instParaExame)}</b> na Institucional N2.<br><br>`;
-        }
-
-        if (instParaPassar <= 0) {
-          html += "<span class='aprovado'>Resultado: você já está aprovado direto, mesmo sem nota na Institucional N2, considerando ela como 0.</span>";
-        } else if (instParaPassar <= 10) {
-          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
-        } else if (instParaExame <= 10) {
-          html += "<span class='alerta'>Resultado: não dá mais para passar direto só com a Institucional, mas ainda dá para ir ao Exame Final.</span>";
-        } else {
-          html += "<span class='reprovado'>Resultado: mesmo tirando 10 na Institucional, você ficaria reprovado automaticamente.</span>";
-        }
-
-      } else if (parcial === null && inst !== null) {
-        const parcialParaPassar = (2 * n2ParaPassar) - inst;
-        const parcialParaExame = (2 * n2ParaExame) - inst;
-
-        const n2ComParcialZero = (0 + inst) / 2;
-        const mediaComParcialZero = (n1 + n2ComParcialZero) / 2;
-
-        html += `Como você já tem Institucional N2 = ${fmt(inst)}:<br>`;
-
-        if (parcialParaPassar <= 0) {
-          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 na Parcial N2, sua média final fica ${fmt(mediaComParcialZero)}.</span><br>`;
-          html += `Ou seja, considerando nota 0 na Parcial N2, você já passa direto.<br><br>`;
-        } else if (parcialParaPassar > 10) {
-          html += `Mesmo tirando 10,00 na Parcial N2, você não passa direto.<br>`;
-        } else {
-          html += `Para passar direto, precisa tirar pelo menos <b>${fmt(parcialParaPassar)}</b> na Parcial N2.<br>`;
-        }
-
-        if (parcialParaExame <= 0) {
-          html += `Você também já garante pelo menos o Exame Final mesmo tirando 0 na Parcial N2.<br><br>`;
-        } else if (parcialParaExame > 10) {
-          html += `Mesmo tirando 10,00 na Parcial N2, você não alcança média 5,00.<br><br>`;
-        } else {
-          html += `Para pelo menos ir ao Exame Final, precisa tirar pelo menos <b>${fmt(parcialParaExame)}</b> na Parcial N2.<br><br>`;
-        }
-
-        if (parcialParaPassar <= 0) {
-          html += "<span class='aprovado'>Resultado: você já está aprovado direto, mesmo sem nota na Parcial N2, considerando ela como 0.</span>";
-        } else if (parcialParaPassar <= 10) {
-          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
-        } else if (parcialParaExame <= 10) {
-          html += "<span class='alerta'>Resultado: não dá mais para passar direto só com a Parcial, mas ainda dá para ir ao Exame Final.</span>";
-        } else {
-          html += "<span class='reprovado'>Resultado: mesmo tirando 10 na Parcial, você ficaria reprovado automaticamente.</span>";
-        }
-
-      } else {
-        html += `Se você ainda não fez a Parcial e a Institucional:<br>`;
-
-        if (n2ParaPassar <= 0) {
-          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 nas duas notas da N2, você já passa direto.</span><br>`;
-        } else if (n2ParaPassar > 10) {
-          html += `Mesmo tirando 10,00 nas duas notas da N2, você não passa direto.<br>`;
-        } else {
-          html += `Para passar direto, a média entre Parcial N2 e Institucional N2 precisa ser pelo menos <b>${fmt(n2ParaPassar)}</b>.<br>`;
-          html += `Se tirar a mesma nota nas duas, precisa tirar pelo menos <b>${fmt(n2ParaPassar)}</b> em cada uma.<br>`;
-        }
-
-        html += `<br>`;
-
-        if (n2ParaExame <= 0) {
-          html += `Você já garante pelo menos o Exame Final mesmo tirando 0 nas duas notas da N2.<br><br>`;
-        } else if (n2ParaExame > 10) {
-          html += `Mesmo tirando 10,00 nas duas notas da N2, você não alcança média 5,00.<br><br>`;
-        } else {
-          html += `Para pelo menos ir ao Exame Final, a média entre Parcial N2 e Institucional N2 precisa ser pelo menos <b>${fmt(n2ParaExame)}</b>.<br>`;
-          html += `Se tirar a mesma nota nas duas, precisa tirar pelo menos <b>${fmt(n2ParaExame)}</b> em cada uma.<br><br>`;
-        }
-
-        if (n2ParaPassar <= 0) {
-          html += "<span class='aprovado'>Resultado: você já está aprovado direto.</span>";
-        } else if (n2ParaPassar <= 10) {
-          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
-        } else if (n2ParaExame <= 10) {
-          html += "<span class='alerta'>Resultado: não dá mais para passar direto, mas ainda dá para ir ao Exame Final.</span>";
-        } else {
-          html += "<span class='reprovado'>Resultado: mesmo tirando 10 nas duas notas da N2, você ficaria reprovado automaticamente.</span>";
-        }
+        res.innerHTML = html;
+        return;
       }
 
-      res.innerHTML = html;
+      if (parcial !== null && institucional === null) {
+        const mediaComZero = (n1 + (parcial / 2)) / 2;
+        const precisaInstitucionalParaPassar = (2 * n2ParaPassar) - parcial;
+        const precisaInstitucionalParaExame = (2 * n2ParaExame) - parcial;
+
+        if (mediaComZero >= 6) {
+          definirClasseResultado("aprovado");
+
+          html += `<h2>Aprovado direto</h2>`;
+          html += `<div class="linha">Mesmo tirando <b>0,00</b> na Institucional N2:</div>`;
+          html += `<div class="linha">N2 = (${fmt(parcial)} + 0,00) ÷ 2 = <span class="destaque">${fmt(parcial / 2)}</span></div>`;
+          html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(parcial / 2)}) ÷ 2 = <span class="destaque">${fmt(mediaComZero)}</span></div>`;
+          html += `<div class="status aprovado">Você já está aprovado direto, mesmo sem fazer ou sem pontuar na Institucional N2.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (precisaInstitucionalParaPassar <= 10) {
+          definirClasseResultado("neutro");
+
+          html += `<h2>Ainda dá para passar direto</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
+          html += `<div class="status aprovado">Você precisa tirar pelo menos <b>${fmt(precisaInstitucionalParaPassar)}</b> na Institucional N2 para passar direto.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (precisaInstitucionalParaExame <= 10) {
+          definirClasseResultado("exame");
+
+          html += `<h2>Exame final</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
+          html += `<div class="status exame">Não dá mais para passar direto, mas você precisa tirar pelo menos <b>${fmt(precisaInstitucionalParaExame)}</b> na Institucional N2 para ir ao Exame Final.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        definirClasseResultado("reprovado");
+
+        html += `<h2>Reprovado automaticamente</h2>`;
+        html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
+        html += `<div class="status reprovado">Mesmo tirando 10,00 na Institucional N2, sua média final ficaria abaixo de 5,00.</div>`;
+
+        res.innerHTML = html;
+        return;
+      }
+
+      if (parcial === null && institucional !== null) {
+        const mediaComZero = (n1 + (institucional / 2)) / 2;
+        const precisaParcialParaPassar = (2 * n2ParaPassar) - institucional;
+        const precisaParcialParaExame = (2 * n2ParaExame) - institucional;
+
+        if (mediaComZero >= 6) {
+          definirClasseResultado("aprovado");
+
+          html += `<h2>Aprovado direto</h2>`;
+          html += `<div class="linha">Mesmo tirando <b>0,00</b> na Parcial N2:</div>`;
+          html += `<div class="linha">N2 = (0,00 + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(institucional / 2)}</span></div>`;
+          html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(institucional / 2)}) ÷ 2 = <span class="destaque">${fmt(mediaComZero)}</span></div>`;
+          html += `<div class="status aprovado">Você já está aprovado direto, mesmo sem fazer ou sem pontuar na Parcial N2.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (precisaParcialParaPassar <= 10) {
+          definirClasseResultado("neutro");
+
+          html += `<h2>Ainda dá para passar direto</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
+          html += `<div class="status aprovado">Você precisa tirar pelo menos <b>${fmt(precisaParcialParaPassar)}</b> na Parcial N2 para passar direto.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (precisaParcialParaExame <= 10) {
+          definirClasseResultado("exame");
+
+          html += `<h2>Exame final</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
+          html += `<div class="status exame">Não dá mais para passar direto, mas você precisa tirar pelo menos <b>${fmt(precisaParcialParaExame)}</b> na Parcial N2 para ir ao Exame Final.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        definirClasseResultado("reprovado");
+
+        html += `<h2>Reprovado automaticamente</h2>`;
+        html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
+        html += `<div class="status reprovado">Mesmo tirando 10,00 na Parcial N2, sua média final ficaria abaixo de 5,00.</div>`;
+
+        res.innerHTML = html;
+        return;
+      }
+
+      if (parcial === null && institucional === null) {
+        if (n2ParaPassar <= 0) {
+          definirClasseResultado("aprovado");
+
+          html += `<h2>Aprovado direto</h2>`;
+          html += `<div class="status aprovado">Com sua N1 = <b>${fmt(n1)}</b>, você já passa direto mesmo tirando 0,00 na N2.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (n2ParaPassar <= 10) {
+          definirClasseResultado("neutro");
+
+          html += `<h2>Quanto precisa na N2</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b>:</div>`;
+          html += `<div class="status aprovado">Para passar direto, sua N2 final precisa ser pelo menos <b>${fmt(n2ParaPassar)}</b>.</div>`;
+          html += `<div class="linha">Se tirar a mesma nota na Parcial N2 e na Institucional N2, precisa tirar <b>${fmt(n2ParaPassar)}</b> em cada uma.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        if (n2ParaExame <= 10) {
+          definirClasseResultado("exame");
+
+          html += `<h2>Exame final</h2>`;
+          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b>:</div>`;
+          html += `<div class="status exame">Não dá mais para passar direto, mas sua N2 final precisa ser pelo menos <b>${fmt(n2ParaExame)}</b> para ir ao Exame Final.</div>`;
+
+          res.innerHTML = html;
+          return;
+        }
+
+        definirClasseResultado("reprovado");
+
+        html += `<h2>Reprovado automaticamente</h2>`;
+        html += `<div class="status reprovado">Mesmo tirando 10,00 na N2, sua média final ficaria abaixo de 5,00.</div>`;
+
+        res.innerHTML = html;
+        return;
+      }
     }
 
     function limpar() {
       document.getElementById("n1").value = "";
       document.getElementById("parcial").value = "";
       document.getElementById("institucional").value = "";
-      document.getElementById("resultado").innerHTML = "Digite suas notas e clique em calcular.";
+
+      const res = document.getElementById("resultado");
+      res.className = "resultado neutro";
+      res.innerHTML = "Digite suas notas e clique em calcular.";
     }
   </script>
 </body>
