@@ -139,7 +139,7 @@
     </div>
 
     <small>
-      Observação: se você ainda não souber alguma nota da N2, a calculadora também mostra quanto você precisa tirar para passar direto ou, pelo menos, ir para o Exame Final.
+      Observação: se você ainda não souber alguma nota da N2, a calculadora mostra quanto você precisa tirar para passar direto ou, pelo menos, ir para o Exame Final.
     </small>
   </div>
 
@@ -201,7 +201,7 @@
       }
 
       if (n2ParaExame <= 0) {
-        html += `Você já tem média suficiente para, no mínimo, ir ao Exame Final.<br><br>`;
+        html += `Mesmo com N2 igual a 0, você já fica com média suficiente para, no mínimo, ir ao Exame Final.<br><br>`;
       } else if (n2ParaExame > 10) {
         html += `Mesmo tirando 10,00 na N2, você não alcança média 5,00 para ir ao Exame Final.<br><br>`;
       } else {
@@ -221,10 +221,14 @@
         const instParaPassar = (2 * n2ParaPassar) - parcial;
         const instParaExame = (2 * n2ParaExame) - parcial;
 
+        const n2ComInstZero = (parcial + 0) / 2;
+        const mediaComInstZero = (n1 + n2ComInstZero) / 2;
+
         html += `Como você já tem Parcial N2 = ${fmt(parcial)}:<br>`;
 
         if (instParaPassar <= 0) {
-          html += `Você já consegue passar direto mesmo tirando 0 na Institucional N2.<br>`;
+          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 na Institucional N2, sua média final fica ${fmt(mediaComInstZero)}.</span><br>`;
+          html += `Ou seja, considerando nota 0 na Institucional N2, você já passa direto.<br><br>`;
         } else if (instParaPassar > 10) {
           html += `Mesmo tirando 10,00 na Institucional N2, você não passa direto.<br>`;
         } else {
@@ -232,29 +236,35 @@
         }
 
         if (instParaExame <= 0) {
-          html += `Você já garante pelo menos o Exame Final mesmo tirando 0 na Institucional N2.<br><br>`;
+          html += `Você também já garante pelo menos o Exame Final mesmo tirando 0 na Institucional N2.<br><br>`;
         } else if (instParaExame > 10) {
           html += `Mesmo tirando 10,00 na Institucional N2, você não alcança média 5,00.<br><br>`;
         } else {
           html += `Para pelo menos ir ao Exame Final, precisa tirar pelo menos <b>${fmt(instParaExame)}</b> na Institucional N2.<br><br>`;
         }
 
-        if (instParaPassar <= 10) {
-          html += "<span class='aprovado'>Ainda dá para passar direto.</span>";
+        if (instParaPassar <= 0) {
+          html += "<span class='aprovado'>Resultado: você já está aprovado direto, mesmo sem nota na Institucional N2, considerando ela como 0.</span>";
+        } else if (instParaPassar <= 10) {
+          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
         } else if (instParaExame <= 10) {
-          html += "<span class='alerta'>Não dá mais para passar direto só com a Institucional, mas ainda dá para ir ao Exame Final.</span>";
+          html += "<span class='alerta'>Resultado: não dá mais para passar direto só com a Institucional, mas ainda dá para ir ao Exame Final.</span>";
         } else {
-          html += "<span class='reprovado'>Mesmo tirando 10 na Institucional, você ficaria reprovado automaticamente.</span>";
+          html += "<span class='reprovado'>Resultado: mesmo tirando 10 na Institucional, você ficaria reprovado automaticamente.</span>";
         }
 
       } else if (parcial === null && inst !== null) {
         const parcialParaPassar = (2 * n2ParaPassar) - inst;
         const parcialParaExame = (2 * n2ParaExame) - inst;
 
+        const n2ComParcialZero = (0 + inst) / 2;
+        const mediaComParcialZero = (n1 + n2ComParcialZero) / 2;
+
         html += `Como você já tem Institucional N2 = ${fmt(inst)}:<br>`;
 
         if (parcialParaPassar <= 0) {
-          html += `Você já consegue passar direto mesmo tirando 0 na Parcial N2.<br>`;
+          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 na Parcial N2, sua média final fica ${fmt(mediaComParcialZero)}.</span><br>`;
+          html += `Ou seja, considerando nota 0 na Parcial N2, você já passa direto.<br><br>`;
         } else if (parcialParaPassar > 10) {
           html += `Mesmo tirando 10,00 na Parcial N2, você não passa direto.<br>`;
         } else {
@@ -262,26 +272,28 @@
         }
 
         if (parcialParaExame <= 0) {
-          html += `Você já garante pelo menos o Exame Final mesmo tirando 0 na Parcial N2.<br><br>`;
+          html += `Você também já garante pelo menos o Exame Final mesmo tirando 0 na Parcial N2.<br><br>`;
         } else if (parcialParaExame > 10) {
           html += `Mesmo tirando 10,00 na Parcial N2, você não alcança média 5,00.<br><br>`;
         } else {
           html += `Para pelo menos ir ao Exame Final, precisa tirar pelo menos <b>${fmt(parcialParaExame)}</b> na Parcial N2.<br><br>`;
         }
 
-        if (parcialParaPassar <= 10) {
-          html += "<span class='aprovado'>Ainda dá para passar direto.</span>";
+        if (parcialParaPassar <= 0) {
+          html += "<span class='aprovado'>Resultado: você já está aprovado direto, mesmo sem nota na Parcial N2, considerando ela como 0.</span>";
+        } else if (parcialParaPassar <= 10) {
+          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
         } else if (parcialParaExame <= 10) {
-          html += "<span class='alerta'>Não dá mais para passar direto só com a Parcial, mas ainda dá para ir ao Exame Final.</span>";
+          html += "<span class='alerta'>Resultado: não dá mais para passar direto só com a Parcial, mas ainda dá para ir ao Exame Final.</span>";
         } else {
-          html += "<span class='reprovado'>Mesmo tirando 10 na Parcial, você ficaria reprovado automaticamente.</span>";
+          html += "<span class='reprovado'>Resultado: mesmo tirando 10 na Parcial, você ficaria reprovado automaticamente.</span>";
         }
 
       } else {
         html += `Se você ainda não fez a Parcial e a Institucional:<br>`;
 
         if (n2ParaPassar <= 0) {
-          html += `Você já consegue passar direto mesmo tirando 0 nas duas notas da N2.<br>`;
+          html += `<span class='aprovado'>APROVADO DIRETO: mesmo tirando 0 nas duas notas da N2, você já passa direto.</span><br>`;
         } else if (n2ParaPassar > 10) {
           html += `Mesmo tirando 10,00 nas duas notas da N2, você não passa direto.<br>`;
         } else {
@@ -300,12 +312,14 @@
           html += `Se tirar a mesma nota nas duas, precisa tirar pelo menos <b>${fmt(n2ParaExame)}</b> em cada uma.<br><br>`;
         }
 
-        if (n2ParaPassar <= 10) {
-          html += "<span class='aprovado'>Ainda dá para passar direto.</span>";
+        if (n2ParaPassar <= 0) {
+          html += "<span class='aprovado'>Resultado: você já está aprovado direto.</span>";
+        } else if (n2ParaPassar <= 10) {
+          html += "<span class='aprovado'>Resultado: ainda dá para passar direto.</span>";
         } else if (n2ParaExame <= 10) {
-          html += "<span class='alerta'>Não dá mais para passar direto, mas ainda dá para ir ao Exame Final.</span>";
+          html += "<span class='alerta'>Resultado: não dá mais para passar direto, mas ainda dá para ir ao Exame Final.</span>";
         } else {
-          html += "<span class='reprovado'>Mesmo tirando 10 nas duas notas da N2, você ficaria reprovado automaticamente.</span>";
+          html += "<span class='reprovado'>Resultado: mesmo tirando 10 nas duas notas da N2, você ficaria reprovado automaticamente.</span>";
         }
       }
 
