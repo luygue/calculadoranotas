@@ -10,106 +10,195 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #eef4ff;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #64748b;
+      --border: #dbe3ef;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --input: #ffffff;
+      --formula: #f1f5f9;
+      --shadow: rgba(15, 23, 42, 0.14);
+
+      --success-bg: #ecfdf5;
+      --success-border: #86efac;
+      --success-text: #166534;
+
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
+
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --danger-text: #991b1b;
+    }
+
+    body.dark {
+      --bg: #020617;
+      --card: #0f172a;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary: #475569;
+      --input: #111827;
+      --formula: #111827;
+      --shadow: rgba(0, 0, 0, 0.4);
+
+      --success-bg: #052e1a;
+      --success-border: #16a34a;
+      --success-text: #86efac;
+
+      --warning-bg: #422006;
+      --warning-border: #d97706;
+      --warning-text: #fde68a;
+
+      --danger-bg: #450a0a;
+      --danger-border: #dc2626;
+      --danger-text: #fecaca;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #dbeafe, #f8fafc);
-      color: #111827;
-      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.22), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      padding: 22px;
+      transition: background 0.25s, color 0.25s;
     }
 
     .container {
-      max-width: 620px;
+      max-width: 650px;
       margin: 0 auto;
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 26px;
+      box-shadow: 0 24px 60px var(--shadow);
+      transition: background 0.25s, border 0.25s;
     }
 
-    .topo {
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .theme-btn {
+      width: auto;
+      padding: 10px 13px;
+      font-size: 14px;
+      border-radius: 999px;
+      background: var(--formula);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .hero {
       text-align: center;
       margin-bottom: 22px;
     }
 
-    .badge {
-      display: inline-block;
-      background: #eff6ff;
-      color: #2563eb;
-      font-weight: bold;
-      font-size: 13px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      margin-bottom: 10px;
-    }
-
     h1 {
-      font-size: 28px;
+      font-size: 30px;
+      line-height: 1.15;
       margin: 0;
-      color: #0f172a;
+      color: var(--text);
     }
 
     .subtitulo {
-      margin-top: 10px;
-      color: #475569;
+      margin: 12px auto 0;
+      color: var(--muted);
       font-size: 15px;
       line-height: 1.5;
+      max-width: 520px;
     }
 
     .formula {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+      background: var(--formula);
+      border: 1px solid var(--border);
       padding: 16px;
-      border-radius: 16px;
+      border-radius: 18px;
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 22px;
+      color: var(--text);
     }
 
-    .formula b {
-      color: #1e40af;
+    .formula strong {
+      color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      gap: 15px;
     }
 
     label {
       display: block;
-      margin-top: 16px;
       margin-bottom: 7px;
       font-weight: bold;
-      color: #1f2937;
+      color: var(--text);
     }
 
     input {
       width: 100%;
       padding: 15px;
       font-size: 18px;
-      border: 1px solid #cbd5e1;
-      border-radius: 14px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
       outline: none;
+      background: var(--input);
+      color: var(--text);
       transition: 0.2s;
-      background: #ffffff;
+    }
+
+    input::placeholder {
+      color: var(--muted);
     }
 
     input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
     }
 
     .botoes {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     button {
+      width: 100%;
       border: none;
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 15px;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.18s;
     }
 
     button:hover {
@@ -117,90 +206,106 @@
     }
 
     .btn-calcular {
-      background: #2563eb;
-      color: #ffffff;
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-calcular:hover {
+      background: var(--primary-dark);
     }
 
     .btn-limpar {
-      background: #64748b;
-      color: #ffffff;
+      background: var(--secondary);
+      color: white;
     }
 
     .resultado {
       margin-top: 24px;
       padding: 18px;
-      border-radius: 18px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      border-radius: 20px;
       line-height: 1.65;
       font-size: 16px;
+      border: 1px solid var(--border);
+      background: var(--formula);
+      color: var(--text);
     }
 
     .resultado h2 {
       margin: 0 0 10px 0;
-      font-size: 20px;
-    }
-
-    .aprovado {
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-      color: #166534;
-    }
-
-    .exame {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      color: #92400e;
-    }
-
-    .reprovado {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
-    }
-
-    .neutro {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      color: #111827;
-    }
-
-    .status {
-      padding: 14px;
-      border-radius: 14px;
-      font-weight: bold;
-      margin-top: 12px;
+      font-size: 22px;
     }
 
     .linha {
-      margin: 6px 0;
+      margin: 7px 0;
     }
 
     .destaque {
       font-weight: bold;
-      color: #0f172a;
+    }
+
+    .aprovado-box {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success-text);
+    }
+
+    .exame-box {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: var(--warning-text);
+    }
+
+    .reprovado-box {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: var(--danger-text);
+    }
+
+    .neutro-box {
+      background: var(--formula);
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 15px;
+      border: 1px solid;
+      font-weight: bold;
+    }
+
+    .nota-info {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     small {
       display: block;
       margin-top: 18px;
-      color: #64748b;
+      color: var(--muted);
       font-size: 13px;
       line-height: 1.5;
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 540px) {
       body {
         padding: 12px;
       }
 
       .container {
         padding: 20px;
-        border-radius: 18px;
+        border-radius: 22px;
       }
 
       h1 {
-        font-size: 24px;
+        font-size: 25px;
+      }
+
+      .top-bar {
+        align-items: flex-start;
       }
     }
   </style>
@@ -208,42 +313,54 @@
 
 <body>
   <div class="container">
-    <div class="topo">
-      <div class="badge">Calculadora de Média</div>
+    <div class="top-bar">
+      <div class="badge">📘 Calculadora de Média</div>
+      <button class="theme-btn" onclick="alternarTema()" id="themeButton">🌙 Modo noturno</button>
+    </div>
+
+    <div class="hero">
       <h1>Nota da Faculdade</h1>
       <p class="subtitulo">
-        Preencha as notas que você já tem. Pode deixar em branco a nota que ainda não saiu.
+        Preencha as notas que você já tem. Deixe em branco a nota que ainda não saiu ou que ainda não foi feita.
       </p>
     </div>
 
     <div class="formula">
-      <b>N2</b> = (Parcial N2 + Institucional N2) ÷ 2<br>
-      <b>Média Final</b> = (N1 + N2) ÷ 2<br><br>
-      <b>6,00 ou mais:</b> aprovado direto<br>
-      <b>5,00 até 5,99:</b> exame final<br>
-      <b>Abaixo de 5,00:</b> reprovado automaticamente
+      <strong>N2</strong> = (Parcial N2 + Institucional N2) ÷ 2<br>
+      <strong>Média Final</strong> = (N1 + N2) ÷ 2<br><br>
+      <strong>6,00 ou mais:</strong> aprovado direto<br>
+      <strong>5,00 até 5,99:</strong> exame final<br>
+      <strong>Abaixo de 5,00:</strong> reprovado automaticamente
     </div>
 
-    <label for="n1">Nota N1</label>
-    <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 8">
+    <div class="grid">
+      <div>
+        <label for="n1">Nota N1</label>
+        <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 8">
+      </div>
 
-    <label for="parcial">Nota da Parcial N2</label>
-    <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 7">
+      <div>
+        <label for="parcial">Nota da Parcial N2</label>
+        <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 7">
+      </div>
 
-    <label for="institucional">Nota Institucional N2</label>
-    <input type="number" id="institucional" step="0.01" min="0" max="10" placeholder="Ex: 8">
+      <div>
+        <label for="institucional">Nota Institucional N2</label>
+        <input type="number" id="institucional" step="0.01" min="0" max="10" placeholder="Ex: 8">
+      </div>
+    </div>
 
     <div class="botoes">
       <button class="btn-calcular" onclick="calcular()">Calcular</button>
       <button class="btn-limpar" onclick="limpar()">Limpar</button>
     </div>
 
-    <div id="resultado" class="resultado neutro">
+    <div id="resultado" class="resultado neutro-box">
       Digite suas notas e clique em calcular.
     </div>
 
     <small>
-      A calculadora considera que notas em branco ainda não foram feitas ou ainda não saíram.
+      A calculadora considera as notas em branco como notas ainda não informadas.
     </small>
   </div>
 
@@ -262,48 +379,223 @@
       return n === null || (n >= 0 && n <= 10);
     }
 
-    function definirClasseResultado(classe) {
+    function setResultadoClasse(classe) {
       const res = document.getElementById("resultado");
       res.className = "resultado " + classe;
     }
 
     function mostrarErro(mensagem) {
-      definirClasseResultado("reprovado");
+      setResultadoClasse("reprovado-box");
       document.getElementById("resultado").innerHTML = `
         <h2>Atenção</h2>
         <div>${mensagem}</div>
       `;
     }
 
-    function calcularStatus(media) {
+    function classificarMedia(media) {
       if (media >= 6) {
         return {
-          classe: "aprovado",
+          classe: "aprovado-box",
           titulo: "Aprovado direto",
-          mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Você está aprovado direto.`
+          mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Você está aprovado direto.`
         };
       }
 
       if (media >= 5) {
         return {
-          classe: "exame",
+          classe: "exame-box",
           titulo: "Exame final",
-          mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Você vai para o Exame Final.`
+          mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Você vai para o Exame Final.`
         };
       }
 
       return {
-        classe: "reprovado",
+        classe: "reprovado-box",
         titulo: "Reprovado automaticamente",
-        mensagem: `Sua média final ficou <b>${fmt(media)}</b>. Como ficou abaixo de 5,00, você está reprovado automaticamente.`
+        mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Como ficou abaixo de 5,00, você está reprovado automaticamente.`
       };
+    }
+
+    function calcularComTodasAsNotas(n1, parcial, institucional) {
+      const n2 = (parcial + institucional) / 2;
+      const media = (n1 + n2) / 2;
+      const status = classificarMedia(media);
+
+      setResultadoClasse(status.classe);
+
+      document.getElementById("resultado").innerHTML = `
+        <h2>${status.titulo}</h2>
+        <div class="linha">N2 = (${fmt(parcial)} + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2)}</span></div>
+        <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <span class="destaque">${fmt(media)}</span></div>
+        <div class="status ${status.classe}">${status.mensagem}</div>
+      `;
+    }
+
+    function calcularSoComN1(n1) {
+      const n2ParaPassar = 12 - n1;
+      const n2ParaExame = 10 - n1;
+
+      if (n2ParaPassar <= 0) {
+        setResultadoClasse("aprovado-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Aprovado direto</h2>
+          <div class="status aprovado-box">
+            Com N1 = <strong>${fmt(n1)}</strong>, você já passa direto mesmo tirando 0,00 na N2.
+          </div>
+        `;
+        return;
+      }
+
+      if (n2ParaPassar <= 10) {
+        setResultadoClasse("neutro-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Quanto precisa na N2</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong>:</div>
+          <div class="status aprovado-box">
+            Para passar direto, sua N2 final precisa ser pelo menos <strong>${fmt(n2ParaPassar)}</strong>.
+          </div>
+          <div class="nota-info">
+            Como a N2 é a média entre Parcial N2 e Institucional N2, se tirar a mesma nota nas duas, precisa tirar pelo menos <strong>${fmt(n2ParaPassar)}</strong> em cada uma.
+          </div>
+        `;
+        return;
+      }
+
+      if (n2ParaExame <= 10) {
+        setResultadoClasse("exame-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Exame final</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong>:</div>
+          <div class="status exame-box">
+            Não dá mais para passar direto, mas sua N2 final precisa ser pelo menos <strong>${fmt(n2ParaExame)}</strong> para ir ao Exame Final.
+          </div>
+        `;
+        return;
+      }
+
+      setResultadoClasse("reprovado-box");
+      document.getElementById("resultado").innerHTML = `
+        <h2>Reprovado automaticamente</h2>
+        <div class="status reprovado-box">
+          Mesmo tirando 10,00 na N2, sua média final ficaria abaixo de 5,00.
+        </div>
+      `;
+    }
+
+    function calcularFaltandoInstitucional(n1, parcial) {
+      const n2ComInstitucionalZero = parcial / 2;
+      const mediaComInstitucionalZero = (n1 + n2ComInstitucionalZero) / 2;
+
+      if (mediaComInstitucionalZero >= 6) {
+        setResultadoClasse("aprovado-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Aprovado direto</h2>
+          <div class="linha">Mesmo tirando <strong>0,00</strong> na Institucional N2:</div>
+          <div class="linha">N2 = (${fmt(parcial)} + 0,00) ÷ 2 = <span class="destaque">${fmt(n2ComInstitucionalZero)}</span></div>
+          <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2ComInstitucionalZero)}) ÷ 2 = <span class="destaque">${fmt(mediaComInstitucionalZero)}</span></div>
+          <div class="status aprovado-box">
+            Você já está aprovado direto, mesmo sem pontuar na Institucional N2.
+          </div>
+        `;
+        return;
+      }
+
+      const precisaParaPassar = (24 - (2 * n1) - parcial);
+      const precisaParaExame = (20 - (2 * n1) - parcial);
+
+      if (precisaParaPassar <= 10) {
+        setResultadoClasse("neutro-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Ainda dá para passar direto</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
+          <div class="status aprovado-box">
+            Você precisa tirar pelo menos <strong>${fmt(precisaParaPassar)}</strong> na Institucional N2 para passar direto.
+          </div>
+        `;
+        return;
+      }
+
+      if (precisaParaExame <= 10) {
+        setResultadoClasse("exame-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Exame final</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
+          <div class="status exame-box">
+            Não dá mais para passar direto, mas você precisa tirar pelo menos <strong>${fmt(precisaParaExame)}</strong> na Institucional N2 para ir ao Exame Final.
+          </div>
+        `;
+        return;
+      }
+
+      setResultadoClasse("reprovado-box");
+      document.getElementById("resultado").innerHTML = `
+        <h2>Reprovado automaticamente</h2>
+        <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
+        <div class="status reprovado-box">
+          Mesmo tirando 10,00 na Institucional N2, sua média final ficaria abaixo de 5,00.
+        </div>
+      `;
+    }
+
+    function calcularFaltandoParcial(n1, institucional) {
+      const n2ComParcialZero = institucional / 2;
+      const mediaComParcialZero = (n1 + n2ComParcialZero) / 2;
+
+      if (mediaComParcialZero >= 6) {
+        setResultadoClasse("aprovado-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Aprovado direto</h2>
+          <div class="linha">Mesmo tirando <strong>0,00</strong> na Parcial N2:</div>
+          <div class="linha">N2 = (0,00 + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2ComParcialZero)}</span></div>
+          <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2ComParcialZero)}) ÷ 2 = <span class="destaque">${fmt(mediaComParcialZero)}</span></div>
+          <div class="status aprovado-box">
+            Você já está aprovado direto, mesmo sem pontuar na Parcial N2.
+          </div>
+        `;
+        return;
+      }
+
+      const precisaParaPassar = (24 - (2 * n1) - institucional);
+      const precisaParaExame = (20 - (2 * n1) - institucional);
+
+      if (precisaParaPassar <= 10) {
+        setResultadoClasse("neutro-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Ainda dá para passar direto</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
+          <div class="status aprovado-box">
+            Você precisa tirar pelo menos <strong>${fmt(precisaParaPassar)}</strong> na Parcial N2 para passar direto.
+          </div>
+        `;
+        return;
+      }
+
+      if (precisaParaExame <= 10) {
+        setResultadoClasse("exame-box");
+        document.getElementById("resultado").innerHTML = `
+          <h2>Exame final</h2>
+          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
+          <div class="status exame-box">
+            Não dá mais para passar direto, mas você precisa tirar pelo menos <strong>${fmt(precisaParaExame)}</strong> na Parcial N2 para ir ao Exame Final.
+          </div>
+        `;
+        return;
+      }
+
+      setResultadoClasse("reprovado-box");
+      document.getElementById("resultado").innerHTML = `
+        <h2>Reprovado automaticamente</h2>
+        <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
+        <div class="status reprovado-box">
+          Mesmo tirando 10,00 na Parcial N2, sua média final ficaria abaixo de 5,00.
+        </div>
+      `;
     }
 
     function calcular() {
       const n1 = numero(document.getElementById("n1").value);
       const parcial = numero(document.getElementById("parcial").value);
       const institucional = numero(document.getElementById("institucional").value);
-      const res = document.getElementById("resultado");
 
       if (!validarNota(n1) || !validarNota(parcial) || !validarNota(institucional)) {
         mostrarErro("Digite apenas notas entre 0 e 10.");
@@ -315,169 +607,22 @@
         return;
       }
 
-      let html = "";
-
-      const n2ParaPassar = 12 - n1;
-      const n2ParaExame = 10 - n1;
-
       if (parcial !== null && institucional !== null) {
-        const n2 = (parcial + institucional) / 2;
-        const media = (n1 + n2) / 2;
-        const status = calcularStatus(media);
-
-        definirClasseResultado(status.classe);
-
-        html += `<h2>${status.titulo}</h2>`;
-        html += `<div class="linha">N2 = (${fmt(parcial)} + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2)}</span></div>`;
-        html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <span class="destaque">${fmt(media)}</span></div>`;
-        html += `<div class="status ${status.classe}">${status.mensagem}</div>`;
-
-        res.innerHTML = html;
+        calcularComTodasAsNotas(n1, parcial, institucional);
         return;
       }
 
       if (parcial !== null && institucional === null) {
-        const mediaComZero = (n1 + (parcial / 2)) / 2;
-        const precisaInstitucionalParaPassar = (2 * n2ParaPassar) - parcial;
-        const precisaInstitucionalParaExame = (2 * n2ParaExame) - parcial;
-
-        if (mediaComZero >= 6) {
-          definirClasseResultado("aprovado");
-
-          html += `<h2>Aprovado direto</h2>`;
-          html += `<div class="linha">Mesmo tirando <b>0,00</b> na Institucional N2:</div>`;
-          html += `<div class="linha">N2 = (${fmt(parcial)} + 0,00) ÷ 2 = <span class="destaque">${fmt(parcial / 2)}</span></div>`;
-          html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(parcial / 2)}) ÷ 2 = <span class="destaque">${fmt(mediaComZero)}</span></div>`;
-          html += `<div class="status aprovado">Você já está aprovado direto, mesmo sem fazer ou sem pontuar na Institucional N2.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (precisaInstitucionalParaPassar <= 10) {
-          definirClasseResultado("neutro");
-
-          html += `<h2>Ainda dá para passar direto</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
-          html += `<div class="status aprovado">Você precisa tirar pelo menos <b>${fmt(precisaInstitucionalParaPassar)}</b> na Institucional N2 para passar direto.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (precisaInstitucionalParaExame <= 10) {
-          definirClasseResultado("exame");
-
-          html += `<h2>Exame final</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
-          html += `<div class="status exame">Não dá mais para passar direto, mas você precisa tirar pelo menos <b>${fmt(precisaInstitucionalParaExame)}</b> na Institucional N2 para ir ao Exame Final.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        definirClasseResultado("reprovado");
-
-        html += `<h2>Reprovado automaticamente</h2>`;
-        html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Parcial N2 = <b>${fmt(parcial)}</b>:</div>`;
-        html += `<div class="status reprovado">Mesmo tirando 10,00 na Institucional N2, sua média final ficaria abaixo de 5,00.</div>`;
-
-        res.innerHTML = html;
+        calcularFaltandoInstitucional(n1, parcial);
         return;
       }
 
       if (parcial === null && institucional !== null) {
-        const mediaComZero = (n1 + (institucional / 2)) / 2;
-        const precisaParcialParaPassar = (2 * n2ParaPassar) - institucional;
-        const precisaParcialParaExame = (2 * n2ParaExame) - institucional;
-
-        if (mediaComZero >= 6) {
-          definirClasseResultado("aprovado");
-
-          html += `<h2>Aprovado direto</h2>`;
-          html += `<div class="linha">Mesmo tirando <b>0,00</b> na Parcial N2:</div>`;
-          html += `<div class="linha">N2 = (0,00 + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(institucional / 2)}</span></div>`;
-          html += `<div class="linha">Média Final = (${fmt(n1)} + ${fmt(institucional / 2)}) ÷ 2 = <span class="destaque">${fmt(mediaComZero)}</span></div>`;
-          html += `<div class="status aprovado">Você já está aprovado direto, mesmo sem fazer ou sem pontuar na Parcial N2.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (precisaParcialParaPassar <= 10) {
-          definirClasseResultado("neutro");
-
-          html += `<h2>Ainda dá para passar direto</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
-          html += `<div class="status aprovado">Você precisa tirar pelo menos <b>${fmt(precisaParcialParaPassar)}</b> na Parcial N2 para passar direto.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (precisaParcialParaExame <= 10) {
-          definirClasseResultado("exame");
-
-          html += `<h2>Exame final</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
-          html += `<div class="status exame">Não dá mais para passar direto, mas você precisa tirar pelo menos <b>${fmt(precisaParcialParaExame)}</b> na Parcial N2 para ir ao Exame Final.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        definirClasseResultado("reprovado");
-
-        html += `<h2>Reprovado automaticamente</h2>`;
-        html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b> e Institucional N2 = <b>${fmt(institucional)}</b>:</div>`;
-        html += `<div class="status reprovado">Mesmo tirando 10,00 na Parcial N2, sua média final ficaria abaixo de 5,00.</div>`;
-
-        res.innerHTML = html;
+        calcularFaltandoParcial(n1, institucional);
         return;
       }
 
-      if (parcial === null && institucional === null) {
-        if (n2ParaPassar <= 0) {
-          definirClasseResultado("aprovado");
-
-          html += `<h2>Aprovado direto</h2>`;
-          html += `<div class="status aprovado">Com sua N1 = <b>${fmt(n1)}</b>, você já passa direto mesmo tirando 0,00 na N2.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (n2ParaPassar <= 10) {
-          definirClasseResultado("neutro");
-
-          html += `<h2>Quanto precisa na N2</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b>:</div>`;
-          html += `<div class="status aprovado">Para passar direto, sua N2 final precisa ser pelo menos <b>${fmt(n2ParaPassar)}</b>.</div>`;
-          html += `<div class="linha">Se tirar a mesma nota na Parcial N2 e na Institucional N2, precisa tirar <b>${fmt(n2ParaPassar)}</b> em cada uma.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        if (n2ParaExame <= 10) {
-          definirClasseResultado("exame");
-
-          html += `<h2>Exame final</h2>`;
-          html += `<div class="linha">Com N1 = <b>${fmt(n1)}</b>:</div>`;
-          html += `<div class="status exame">Não dá mais para passar direto, mas sua N2 final precisa ser pelo menos <b>${fmt(n2ParaExame)}</b> para ir ao Exame Final.</div>`;
-
-          res.innerHTML = html;
-          return;
-        }
-
-        definirClasseResultado("reprovado");
-
-        html += `<h2>Reprovado automaticamente</h2>`;
-        html += `<div class="status reprovado">Mesmo tirando 10,00 na N2, sua média final ficaria abaixo de 5,00.</div>`;
-
-        res.innerHTML = html;
-        return;
-      }
+      calcularSoComN1(n1);
     }
 
     function limpar() {
@@ -486,9 +631,30 @@
       document.getElementById("institucional").value = "";
 
       const res = document.getElementById("resultado");
-      res.className = "resultado neutro";
+      res.className = "resultado neutro-box";
       res.innerHTML = "Digite suas notas e clique em calcular.";
     }
+
+    function aplicarTemaSalvo() {
+      const tema = localStorage.getItem("tema-calculadora") || "claro";
+      const botao = document.getElementById("themeButton");
+
+      if (tema === "escuro") {
+        document.body.classList.add("dark");
+        botao.innerHTML = "☀️ Modo claro";
+      } else {
+        document.body.classList.remove("dark");
+        botao.innerHTML = "🌙 Modo noturno";
+      }
+    }
+
+    function alternarTema() {
+      const estaEscuro = document.body.classList.toggle("dark");
+      localStorage.setItem("tema-calculadora", estaEscuro ? "escuro" : "claro");
+      aplicarTemaSalvo();
+    }
+
+    aplicarTemaSalvo();
   </script>
 </body>
 </html>
