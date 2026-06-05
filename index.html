@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Nota da Faculdade</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+    .container {
+      max-width: 520px;
+      margin: auto;
+      background: #fff;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 22px;
+      margin-top: 0;
+      text-align: center;
+    }
+    p {
+      line-height: 1.45;
+    }
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+    button.secondary {
+      background: #64748b;
+      margin-top: 10px;
+    }
+    .resultado {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .aprovado {
+      color: #15803d;
+      font-weight: bold;
+    }
+    .reprovado {
+      color: #b91c1c;
+      font-weight: bold;
+    }
+    .alerta {
+      color: #b45309;
+      font-weight: bold;
+    }
+    .formula {
+      background: #eef2ff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    small {
+      display: block;
+      margin-top: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Nota da Faculdade</h1>
+
+    <p>Preencha as notas que você já tem. A calculadora usa a regra:</p>
+
+    <div class="formula">
+      N2 = (Parcial N2 + Institucional N2) ÷ 2<br>
+      Média Final = (N1 + N2) ÷ 2<br>
+      Para passar: Média Final precisa ser igual ou maior que 6.
+    </div>
+
+    <label for="n1">Nota N1</label>
+    <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 7.5">
+
+    <label for="parcial">Nota da Parcial N2</label>
+    <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 6">
+
+    <label for="institucional">Nota Institucional N2</label>
+    <input type="number" id="institucional" step="0.01" min="0" max="10" placeholder="Ex: 8">
+
+    <button onclick="calcular()">Calcular</button>
+    <button class="secondary" onclick="limpar()">Limpar</button>
+
+    <div id="resultado" class="resultado">
+      Digite suas notas e clique em calcular.
+    </div>
+
+    <small>
+      Observação: se você ainda não souber alguma nota da N2, a calculadora também tenta mostrar quanto você precisa tirar nas notas que faltam para alcançar média 6.
+    </small>
+  </div>
+
+  <script>
+    function numero(valor) {
+      if (valor === "" || valor === null || isNaN(parseFloat(valor))) return null;
+      return parseFloat(valor.replace(",", "."));
+    }
+
+    function fmt(n) {
+      return Number(n).toFixed(2).replace(".", ",");
+    }
+
+    function validar(n) {
+      return n === null || (n >= 0 && n <= 10);
+    }
+
+    function calcular() {
+      const n1 = numero(document.getElementById("n1").value);
+      const parcial = numero(document.getElementById("parcial").value);
+      const inst = numero(document.getElementById("institucional").value);
+      const res = document.getElementById("resultado");
+
+      if (!validar(n1) || !validar(parcial) || !validar(inst)) {
+        res.innerHTML = "<span class='reprovado'>Digite apenas notas entre 0 e 10.</span>";
+        return;
+      }
+
+      if (n1 === null) {
+        res.innerHTML = "<span class='alerta'>Digite pelo menos a nota da N1 para calcular quanto precisa.</span>";
+        return;
+      }
+
+      let html = "";
+
+      const n2Necessaria = 12 - n1; // pois (N1 + N2) / 2 >= 6 => N2 >= 12 - N1
+
+      html += `<b>Com N1 = ${fmt(n1)}</b><br>`;
+      html += `Para passar com média 6, sua <b>N2 final precisa ser pelo menos ${fmt(n2Necessaria)}</b>.<br><br>`;
+
+      if (n2Necessaria <= 0) {
+        html += "<span class='aprovado'>Você já estaria aprovado mesmo com N2 igual a 0.</span><br>";
+      } else if (n2Necessaria > 10) {
+        html += "<span class='reprovado'>Mesmo tirando 10 na N2, não alcança média 6. Confira se a regra da sua faculdade não tem prova final/recuperação.</span><br>";
+      }
+
+      if (parcial !== null && inst !== null) {
+        const n2 = (parcial + inst) / 2;
+        const media = (n1 + n2) / 2;
+
+        html += `<b>N2 calculada:</b> (${fmt(parcial)} + ${fmt(inst)}) ÷ 2 = <b>${fmt(n2)}</b><br>`;
+        html += `<b>Média final:</b> (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <b>${fmt(media)}</b><br><br>`;
+
+        if (media >= 6) {
+          html += `<span class='aprovado'>APROVADO: sua média ficou ${fmt(media)}.</span>`;
+        } else {
+          const falta = 6 - media;
+          html += `<span class='reprovado'>Ainda não passou: sua média ficou ${fmt(media)}. Faltaram ${fmt(falta)} ponto(s) na média final.</span>`;
+        }
+      } else if (parcial !== null && inst === null) {
+        const instNecessaria = (2 * n2Necessaria) - parcial;
+        html += `Como você já tem Parcial N2 = ${fmt(parcial)}, precisa tirar pelo menos <b>${fmt(instNecessaria)}</b> na Institucional N2.<br>`;
+
+        if (instNecessaria <= 0) {
+          html += "<span class='aprovado'>Você já alcança a média necessária mesmo tirando 0 na Institucional.</span>";
+        } else if (instNecessaria > 10) {
+          html += "<span class='reprovado'>Mesmo tirando 10 na Institucional, não alcança média 6.</span>";
+        }
+      } else if (parcial === null && inst !== null) {
+        const parcialNecessaria = (2 * n2Necessaria) - inst;
+        html += `Como você já tem Institucional N2 = ${fmt(inst)}, precisa tirar pelo menos <b>${fmt(parcialNecessaria)}</b> na Parcial N2.<br>`;
+
+        if (parcialNecessaria <= 0) {
+          html += "<span class='aprovado'>Você já alcança a média necessária mesmo tirando 0 na Parcial.</span>";
+        } else if (parcialNecessaria > 10) {
+          html += "<span class='reprovado'>Mesmo tirando 10 na Parcial, não alcança média 6.</span>";
+        }
+      } else {
+        const mesmaNota = n2Necessaria;
+        html += `Se você ainda não fez a Parcial e a Institucional, precisa que a média entre elas seja pelo menos <b>${fmt(n2Necessaria)}</b>.<br>`;
+        html += `Ou seja, se tirar a mesma nota nas duas, precisa tirar pelo menos <b>${fmt(mesmaNota)}</b> em cada uma.`;
+      }
+
+      res.innerHTML = html;
+    }
+
+    function limpar() {
+      document.getElementById("n1").value = "";
+      document.getElementById("parcial").value = "";
+      document.getElementById("institucional").value = "";
+      document.getElementById("resultado").innerHTML = "Digite suas notas e clique em calcular.";
+    }
+  </script>
+</body>
+</html>
