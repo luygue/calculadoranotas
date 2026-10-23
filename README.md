@@ -22,7 +22,7 @@ As notas são salvas apenas no `localStorage` deste navegador, na chave `notas-f
 
 Pesquisa realizada em 23/10/2026. Referência implementada: [Calendário Discente 2025, sistema avaliativo para cursos exceto Medicina](https://fametro.edu.br/wp-content/uploads/2025/01/Calendario-Discente-2025.pdf). O documento anuncia o modelo a partir de 2025/1. O texto indexado da fonte oficial confirma composição das avaliações e limites de aprovação/exame; o acesso direto ao PDF foi bloqueado pelo firewall da instituição durante a pesquisa.
 
-Não foi localizada confirmação oficial de que esse modelo permanece vigente para Direito presencial de Manaus em 2026/2. Por isso o aviso de período e validade aparece no site, sem apresentar a simulação como regra atual confirmada ou resultado acadêmico oficial. Não se aplicaram regulamentos de Medicina, EAD, outras unidades ou outras instituições.
+Não foi localizada confirmação oficial de que esse modelo permanece vigente para Direito presencial de Manaus em 2026/2. A fonte e o período ficam documentados aqui; o bloco explicativo da página foi removido a pedido do responsável pelo site. A simulação não representa resultado acadêmico oficial. Não se aplicaram regulamentos de Medicina, EAD, outras unidades ou outras instituições.
 
 A frequência mínima aplicável a esse curso e período não foi confirmada. Não há decisão de aprovação por frequência: os resultados são exclusivamente por nota e o site orienta a conferir a situação com a coordenação. Regras específicas de estágio, TCC, práticas ou disciplinas devem ser conferidas no plano aplicável.
 

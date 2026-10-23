@@ -75,12 +75,10 @@ test('armazenamento indisponível e registro corrompido não impedem cálculos',
   await expect(page.locator('body')).toHaveClass('dark');
 });
 
-test('layout sem transbordamento, foco e fonte do regulamento visível', async ({ page }, testInfo) => {
+test('layout sem transbordamento e temas', async ({ page }, testInfo) => {
   const erros = [];
   page.on('pageerror', erro => erros.push(erro.message));
   await page.locator('#n1').fill('5');
-  await expect(page.getByText('Modelo publicado em 2025 · validade em 2026/2 não confirmada')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Calendário Discente 2025 da Fametro' })).toHaveAttribute('href', /Calendario-Discente-2025.pdf$/);
   await expect(page.locator('[onclick]')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: `artifacts/${testInfo.project.name}-claro.png`, fullPage: true, animations: 'disabled' });
