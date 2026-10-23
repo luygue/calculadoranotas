@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Nota da Faculdade</title>
+  <title>Calculadora de Notas | CEUNI Fametro Manaus</title>
+  <meta name="description" content="Simule sua média na Fametro e descubra quanto precisa na N1, Parcial, Prova N2 e exame final." />
 
   <style>
     * {
@@ -75,7 +76,7 @@
     }
 
     .container {
-      max-width: 650px;
+      max-width: 860px;
       margin: 0 auto;
       background: var(--card);
       border: 1px solid var(--border);
@@ -308,353 +309,108 @@
         align-items: flex-start;
       }
     }
+    a { color: var(--primary); }
+    .instituicao { color: var(--muted); line-height: 1.5; }
+    .fonte { background: var(--formula); border: 1px solid var(--border); border-radius: 18px; padding: 16px; margin-bottom: 20px; font-size: 14px; line-height: 1.6; }
+    .fonte p:last-child { margin-bottom: 0; }
+    summary { cursor: pointer; font-weight: bold; }
+    button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid > div { min-width: 0; }
+    .campo-exame { margin-top: 20px; }
+    .opcional { color: var(--muted); font-size: 14px; font-weight: normal; }
+    .erro { display: block; color: var(--danger-text); font-size: 13px; line-height: 1.5; margin-top: 6px; }
+    input[aria-invalid="true"] { border-color: var(--danger-text); }
+    .botoes { grid-template-columns: 1fr 1fr; }
+    .resumo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .resumo > div { border: 1px solid var(--border); border-radius: 15px; padding: 14px; background: var(--card); color: var(--text); }
+    .resumo span { display: block; font-size: 14px; }
+    .resumo strong { display: block; font-size: 26px; overflow-wrap: anywhere; }
+    .plano { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 4px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    .tabela { overflow-x: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+    caption { text-align: left; font-weight: bold; margin-bottom: 10px; }
+    .resultado details { font-size: 14px; margin-top: 16px; }
+    @media (max-width: 620px) {
+      .grid { grid-template-columns: 1fr; }
+      .top-bar { flex-wrap: wrap; }
+      .resumo { grid-template-columns: 1fr; }
+      .resultado { padding: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+      button:hover { transform: none; }
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <main class="container">
     <div class="top-bar">
       <div class="badge">📘 Calculadora de Média</div>
-      <button class="theme-btn" onclick="alternarTema()" id="themeButton">🌙 Modo noturno</button>
+      <button class="theme-btn" type="button" aria-pressed="false" id="themeButton">🌙 Modo noturno</button>
     </div>
 
     <div class="hero">
-      <h1>Nota da Faculdade</h1>
+      <h1>Calculadora de Notas</h1>
+      <p class="instituicao">CEUNI Fametro · Manaus · Direito presencial</p>
       <p class="subtitulo">
         Preencha as notas que você já tem. Deixe em branco a nota que ainda não saiu ou que ainda não foi feita.
       </p>
     </div>
 
-    <div class="formula">
-      <strong>N2</strong> = (Parcial N2 + Institucional N2) ÷ 2<br>
-      <strong>Média Final</strong> = (N1 + N2) ÷ 2<br><br>
-      <strong>6,00 ou mais:</strong> aprovado direto<br>
-      <strong>5,00 até 5,99:</strong> exame final<br>
-      <strong>Abaixo de 5,00:</strong> reprovado automaticamente
-    </div>
-
+    <details class="formula">
+      <summary>Como a média é calculada</summary>
+      <p><strong>N2 composta</strong> = (Parcial + Prova N2) ÷ 2<br>
+      <strong>Média semestral</strong> = (N1 + N2 composta) ÷ 2</p>
+      <p><strong>6,0 ou mais:</strong> aprovação direta por nota<br>
+      <strong>De 4,0 a menos de 6,0:</strong> exame final por nota<br>
+      <strong>Abaixo de 4,0:</strong> reprovação por nota</p>
+      <p><strong>Após o exame</strong> = (Média semestral + Exame) ÷ 2; mínimo de 5,0.</p>
+    </details>
+    <aside class="fonte" aria-label="Fonte e limites da simulação">
+      <strong>Modelo publicado em 2025 · validade em 2026/2 não confirmada</strong>
+      <p>Base: <a href="https://fametro.edu.br/wp-content/uploads/2025/01/Calendario-Discente-2025.pdf" target="_blank" rel="noopener noreferrer">Calendário Discente 2025 da Fametro</a>, sistema avaliativo para cursos exceto Medicina. Não foi localizada confirmação oficial para Direito presencial em 2026/2.</p>
+      <p>Simulação por nota, sem valor acadêmico oficial. A frequência mínima aplicável a 2026/2 não foi confirmada nesta pesquisa e não é avaliada aqui. Confira o regulamento da sua disciplina com a coordenação.</p>
+    </aside>
+    <p id="entrada-ajuda" class="nota-info">De 0 a 10, com vírgula ou ponto e até quatro casas decimais. Deixe em branco o que ainda não sabe.</p>
     <div class="grid">
       <div>
         <label for="n1">Nota N1</label>
-        <input type="number" id="n1" step="0.01" min="0" max="10" placeholder="Ex: 8">
+        <input type="text" inputmode="decimal" id="n1" maxlength="32" autocomplete="off" aria-describedby="entrada-ajuda n1-erro" placeholder="Ex.: 7,5">
+        <span class="erro" id="n1-erro"></span>
       </div>
 
       <div>
-        <label for="parcial">Nota da Parcial N2</label>
-        <input type="number" id="parcial" step="0.01" min="0" max="10" placeholder="Ex: 7">
+        <label for="parcial">Parcial N2</label>
+        <input type="text" inputmode="decimal" id="parcial" maxlength="32" autocomplete="off" aria-describedby="entrada-ajuda parcial-erro" placeholder="Ex.: 7,5">
+        <span class="erro" id="parcial-erro"></span>
       </div>
 
       <div>
-        <label for="institucional">Nota Institucional N2</label>
-        <input type="number" id="institucional" step="0.01" min="0" max="10" placeholder="Ex: 8">
+        <label for="institucional">Prova N2 (institucional)</label>
+        <input type="text" inputmode="decimal" id="institucional" maxlength="32" autocomplete="off" aria-describedby="entrada-ajuda institucional-erro" placeholder="Ex.: 7,5">
+        <span class="erro" id="institucional-erro"></span>
       </div>
     </div>
 
+    <div class="campo-exame">
+      <label for="exame">Exame final <span class="opcional">(opcional)</span></label>
+      <input type="text" inputmode="decimal" id="exame" maxlength="32" autocomplete="off" aria-describedby="entrada-ajuda exame-ajuda exame-erro" placeholder="Preencha quando tiver a nota do exame">
+      <span class="erro" id="exame-erro"></span>
+      <p id="exame-ajuda" class="nota-info">Usado após definir todas as notas semestrais, com média de 4,0 a menos de 6,0.</p>
+    </div>
     <div class="botoes">
-      <button class="btn-calcular" onclick="calcular()">Calcular</button>
-      <button class="btn-limpar" onclick="limpar()">Limpar</button>
+      <button type="button" class="btn-calcular" id="calcular">Calcular</button>
+      <button type="button" class="btn-limpar" id="limpar">Limpar notas</button>
     </div>
-
-    <div id="resultado" class="resultado neutro-box">
-      Digite suas notas e clique em calcular.
-    </div>
-
-    <small>
-      A calculadora considera as notas em branco como notas ainda não informadas.
-    </small>
-  </div>
-
-  <script>
-    function numero(valor) {
-      if (valor === "" || valor === null || valor === undefined) return null;
-      const convertido = parseFloat(String(valor).replace(",", "."));
-      return isNaN(convertido) ? null : convertido;
-    }
-
-    function fmt(n) {
-      return Number(n).toFixed(2).replace(".", ",");
-    }
-
-    function validarNota(n) {
-      return n === null || (n >= 0 && n <= 10);
-    }
-
-    function setResultadoClasse(classe) {
-      const res = document.getElementById("resultado");
-      res.className = "resultado " + classe;
-    }
-
-    function mostrarErro(mensagem) {
-      setResultadoClasse("reprovado-box");
-      document.getElementById("resultado").innerHTML = `
-        <h2>Atenção</h2>
-        <div>${mensagem}</div>
-      `;
-    }
-
-    function classificarMedia(media) {
-      if (media >= 6) {
-        return {
-          classe: "aprovado-box",
-          titulo: "Aprovado direto",
-          mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Você está aprovado direto.`
-        };
-      }
-
-      if (media >= 5) {
-        return {
-          classe: "exame-box",
-          titulo: "Exame final",
-          mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Você vai para o Exame Final.`
-        };
-      }
-
-      return {
-        classe: "reprovado-box",
-        titulo: "Reprovado automaticamente",
-        mensagem: `Sua média final ficou <strong>${fmt(media)}</strong>. Como ficou abaixo de 5,00, você está reprovado automaticamente.`
-      };
-    }
-
-    function calcularComTodasAsNotas(n1, parcial, institucional) {
-      const n2 = (parcial + institucional) / 2;
-      const media = (n1 + n2) / 2;
-      const status = classificarMedia(media);
-
-      setResultadoClasse(status.classe);
-
-      document.getElementById("resultado").innerHTML = `
-        <h2>${status.titulo}</h2>
-        <div class="linha">N2 = (${fmt(parcial)} + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2)}</span></div>
-        <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2)}) ÷ 2 = <span class="destaque">${fmt(media)}</span></div>
-        <div class="status ${status.classe}">${status.mensagem}</div>
-      `;
-    }
-
-    function calcularSoComN1(n1) {
-      const n2ParaPassar = 12 - n1;
-      const n2ParaExame = 10 - n1;
-
-      if (n2ParaPassar <= 0) {
-        setResultadoClasse("aprovado-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Aprovado direto</h2>
-          <div class="status aprovado-box">
-            Com N1 = <strong>${fmt(n1)}</strong>, você já passa direto mesmo tirando 0,00 na N2.
-          </div>
-        `;
-        return;
-      }
-
-      if (n2ParaPassar <= 10) {
-        setResultadoClasse("neutro-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Quanto precisa na N2</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong>:</div>
-          <div class="status aprovado-box">
-            Para passar direto, sua N2 final precisa ser pelo menos <strong>${fmt(n2ParaPassar)}</strong>.
-          </div>
-          <div class="nota-info">
-            Como a N2 é a média entre Parcial N2 e Institucional N2, se tirar a mesma nota nas duas, precisa tirar pelo menos <strong>${fmt(n2ParaPassar)}</strong> em cada uma.
-          </div>
-        `;
-        return;
-      }
-
-      if (n2ParaExame <= 10) {
-        setResultadoClasse("exame-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Exame final</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong>:</div>
-          <div class="status exame-box">
-            Não dá mais para passar direto, mas sua N2 final precisa ser pelo menos <strong>${fmt(n2ParaExame)}</strong> para ir ao Exame Final.
-          </div>
-        `;
-        return;
-      }
-
-      setResultadoClasse("reprovado-box");
-      document.getElementById("resultado").innerHTML = `
-        <h2>Reprovado automaticamente</h2>
-        <div class="status reprovado-box">
-          Mesmo tirando 10,00 na N2, sua média final ficaria abaixo de 5,00.
-        </div>
-      `;
-    }
-
-    function calcularFaltandoInstitucional(n1, parcial) {
-      const n2ComInstitucionalZero = parcial / 2;
-      const mediaComInstitucionalZero = (n1 + n2ComInstitucionalZero) / 2;
-
-      if (mediaComInstitucionalZero >= 6) {
-        setResultadoClasse("aprovado-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Aprovado direto</h2>
-          <div class="linha">Mesmo tirando <strong>0,00</strong> na Institucional N2:</div>
-          <div class="linha">N2 = (${fmt(parcial)} + 0,00) ÷ 2 = <span class="destaque">${fmt(n2ComInstitucionalZero)}</span></div>
-          <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2ComInstitucionalZero)}) ÷ 2 = <span class="destaque">${fmt(mediaComInstitucionalZero)}</span></div>
-          <div class="status aprovado-box">
-            Você já está aprovado direto, mesmo sem pontuar na Institucional N2.
-          </div>
-        `;
-        return;
-      }
-
-      const precisaParaPassar = (24 - (2 * n1) - parcial);
-      const precisaParaExame = (20 - (2 * n1) - parcial);
-
-      if (precisaParaPassar <= 10) {
-        setResultadoClasse("neutro-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Ainda dá para passar direto</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
-          <div class="status aprovado-box">
-            Você precisa tirar pelo menos <strong>${fmt(precisaParaPassar)}</strong> na Institucional N2 para passar direto.
-          </div>
-        `;
-        return;
-      }
-
-      if (precisaParaExame <= 10) {
-        setResultadoClasse("exame-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Exame final</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
-          <div class="status exame-box">
-            Não dá mais para passar direto, mas você precisa tirar pelo menos <strong>${fmt(precisaParaExame)}</strong> na Institucional N2 para ir ao Exame Final.
-          </div>
-        `;
-        return;
-      }
-
-      setResultadoClasse("reprovado-box");
-      document.getElementById("resultado").innerHTML = `
-        <h2>Reprovado automaticamente</h2>
-        <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Parcial N2 = <strong>${fmt(parcial)}</strong>:</div>
-        <div class="status reprovado-box">
-          Mesmo tirando 10,00 na Institucional N2, sua média final ficaria abaixo de 5,00.
-        </div>
-      `;
-    }
-
-    function calcularFaltandoParcial(n1, institucional) {
-      const n2ComParcialZero = institucional / 2;
-      const mediaComParcialZero = (n1 + n2ComParcialZero) / 2;
-
-      if (mediaComParcialZero >= 6) {
-        setResultadoClasse("aprovado-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Aprovado direto</h2>
-          <div class="linha">Mesmo tirando <strong>0,00</strong> na Parcial N2:</div>
-          <div class="linha">N2 = (0,00 + ${fmt(institucional)}) ÷ 2 = <span class="destaque">${fmt(n2ComParcialZero)}</span></div>
-          <div class="linha">Média Final = (${fmt(n1)} + ${fmt(n2ComParcialZero)}) ÷ 2 = <span class="destaque">${fmt(mediaComParcialZero)}</span></div>
-          <div class="status aprovado-box">
-            Você já está aprovado direto, mesmo sem pontuar na Parcial N2.
-          </div>
-        `;
-        return;
-      }
-
-      const precisaParaPassar = (24 - (2 * n1) - institucional);
-      const precisaParaExame = (20 - (2 * n1) - institucional);
-
-      if (precisaParaPassar <= 10) {
-        setResultadoClasse("neutro-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Ainda dá para passar direto</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
-          <div class="status aprovado-box">
-            Você precisa tirar pelo menos <strong>${fmt(precisaParaPassar)}</strong> na Parcial N2 para passar direto.
-          </div>
-        `;
-        return;
-      }
-
-      if (precisaParaExame <= 10) {
-        setResultadoClasse("exame-box");
-        document.getElementById("resultado").innerHTML = `
-          <h2>Exame final</h2>
-          <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
-          <div class="status exame-box">
-            Não dá mais para passar direto, mas você precisa tirar pelo menos <strong>${fmt(precisaParaExame)}</strong> na Parcial N2 para ir ao Exame Final.
-          </div>
-        `;
-        return;
-      }
-
-      setResultadoClasse("reprovado-box");
-      document.getElementById("resultado").innerHTML = `
-        <h2>Reprovado automaticamente</h2>
-        <div class="linha">Com N1 = <strong>${fmt(n1)}</strong> e Institucional N2 = <strong>${fmt(institucional)}</strong>:</div>
-        <div class="status reprovado-box">
-          Mesmo tirando 10,00 na Parcial N2, sua média final ficaria abaixo de 5,00.
-        </div>
-      `;
-    }
-
-    function calcular() {
-      const n1 = numero(document.getElementById("n1").value);
-      const parcial = numero(document.getElementById("parcial").value);
-      const institucional = numero(document.getElementById("institucional").value);
-
-      if (!validarNota(n1) || !validarNota(parcial) || !validarNota(institucional)) {
-        mostrarErro("Digite apenas notas entre 0 e 10.");
-        return;
-      }
-
-      if (n1 === null) {
-        mostrarErro("Digite pelo menos a nota N1 para calcular.");
-        return;
-      }
-
-      if (parcial !== null && institucional !== null) {
-        calcularComTodasAsNotas(n1, parcial, institucional);
-        return;
-      }
-
-      if (parcial !== null && institucional === null) {
-        calcularFaltandoInstitucional(n1, parcial);
-        return;
-      }
-
-      if (parcial === null && institucional !== null) {
-        calcularFaltandoParcial(n1, institucional);
-        return;
-      }
-
-      calcularSoComN1(n1);
-    }
-
-    function limpar() {
-      document.getElementById("n1").value = "";
-      document.getElementById("parcial").value = "";
-      document.getElementById("institucional").value = "";
-
-      const res = document.getElementById("resultado");
-      res.className = "resultado neutro-box";
-      res.innerHTML = "Digite suas notas e clique em calcular.";
-    }
-
-    function aplicarTemaSalvo() {
-      const tema = localStorage.getItem("tema-calculadora") || "claro";
-      const botao = document.getElementById("themeButton");
-
-      if (tema === "escuro") {
-        document.body.classList.add("dark");
-        botao.innerHTML = "☀️ Modo claro";
-      } else {
-        document.body.classList.remove("dark");
-        botao.innerHTML = "🌙 Modo noturno";
-      }
-    }
-
-    function alternarTema() {
-      const estaEscuro = document.body.classList.toggle("dark");
-      localStorage.setItem("tema-calculadora", estaEscuro ? "escuro" : "claro");
-      aplicarTemaSalvo();
-    }
-
-    aplicarTemaSalvo();
-  </script>
+    <p id="armazenamento" class="nota-info">As notas ficam somente neste navegador quando o armazenamento está disponível. O cálculo é automático.</p>
+    <div id="resultado" class="resultado neutro-box" role="status" aria-live="polite" aria-atomic="true"></div>
+    <noscript>Ative o JavaScript do navegador para usar a calculadora.</noscript>
+    <small>As notas em branco não são consideradas zero. Esta ferramenta independente não substitui o resultado oficial da Fametro.</small>
+  </main>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>
