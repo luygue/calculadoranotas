@@ -25,19 +25,18 @@ function aplicarTema(escuro) {
 }
 
 function planoHTML(plano, faltantes, direta) {
-  const titulo = direta ? 'Para aprovação direta' : 'Para alcançar o mínimo de acesso ao exame';
+  const titulo = direta ? `Para passar com média ${fmt(plano.alvo)}` : `Para alcançar média ${fmt(plano.alvo)}`;
   if (plano.garantido) return `<section class="plano"><h3>${titulo}</h3><p>O mínimo de média ${fmt(plano.alvo)} já está garantido por nota.</p></section>`;
   if (!plano.possivel) return `<section class="plano"><h3>${titulo}</h3><p>Matematicamente impossível com as notas informadas, mesmo com 10,0 em todas as avaliações restantes.</p></section>`;
   const texto = faltantes.length === 1
-    ? `Você precisa tirar pelo menos <strong>${fmt(plano.iguais)}</strong> na <strong>${NOMES[faltantes[0]]}</strong>, mantendo as outras notas informadas.`
-    : `Para ${direta ? 'aprovação direta' : 'alcançar o mínimo de acesso ao exame'} com média ${fmt(plano.alvo)}, você precisa tirar ${faltantes.map(campo => `<strong>${fmt(plano.iguais)}</strong> na <strong>${NOMES[campo]}</strong>`).join(' e ')}, considerando notas iguais nas avaliações restantes.`;
-  let html = `<section class="plano"><h3>${titulo}</h3><p>${texto}</p>`;
+    ? `Pelo menos <strong class="valor-atencao">${fmt(plano.iguais)}</strong> na <strong>${NOMES[faltantes[0]]}</strong>.`
+    : faltantes.map(campo => `<strong class="valor-atencao">${fmt(plano.iguais)}</strong> na <strong>${NOMES[campo]}</strong>`).join(' e ') + '.';
+  let html = `<section class="plano"><h3>${titulo}</h3><p class="notas-necessarias">${texto}</p><p class="nota-info">${faltantes.length === 1 ? 'Mantendo as outras notas informadas.' : 'Considerando notas iguais nas avaliações restantes.'}</p>`;
   if (faltantes.length > 1) {
-    html += '<p class="nota-info">Essa é uma combinação suficiente. As notas podem ser diferentes, respeitando os pesos de cada avaliação.</p>';
     if (plano.alternativas.length) {
-      html += `<div class="tabela"><table><caption>Outras combinações para média de pelo menos ${fmt(plano.alvo)}</caption><thead><tr>${faltantes.map(campo => `<th scope="col">${NOMES[campo]}</th>`).join('')}<th scope="col">Média</th></tr></thead><tbody>`;
-      html += plano.alternativas.map(opcao => `<tr>${faltantes.map(campo => `<td>${fmt(opcao.notas[campo])}</td>`).join('')}<td>${fmt(opcao.media)}</td></tr>`).join('');
-      html += '</tbody></table></div>';
+      html += `<details class="alternativas"><summary>Ver outras combinações</summary><div class="tabela"><table><caption>Alternativas para média ${fmt(plano.alvo)} ou mais</caption><thead><tr>${faltantes.map(campo => `<th scope="col">${NOMES[campo]}</th>`).join('')}<th scope="col">Média</th></tr></thead><tbody>`;
+      html += plano.alternativas.map(opcao => `<tr>${faltantes.map(campo => `<td class="valor-atencao">${fmt(opcao.notas[campo])}</td>`).join('')}<td>${fmt(opcao.media)}</td></tr>`).join('');
+      html += '</tbody></table></div></details>';
     }
     html += '<details><summary>Mínimos condicionais por avaliação</summary><p>Estes valores só bastam se você tirar 10,0 em TODAS as outras avaliações ainda em branco. Não são mínimos independentes e não devem ser usados juntos.</p><ul>';
     html += plano.individuais.map(item => `<li>${NOMES[item.campo]}: <strong>${fmt(item.comOutrasDez)}</strong>, se as demais notas faltantes forem 10,0.</li>`).join('');
@@ -49,7 +48,7 @@ function planoHTML(plano, faltantes, direta) {
 function mostrar(simulacao) {
   const s = simulacao;
   const estados = {
-    'em-aberto': ['neutro-box', 'Planeje suas próximas notas', 'A aprovação direta ainda é possível.'],
+    'em-aberto': ['neutro-box', 'Quanto precisa para passar?', 'A aprovação direta ainda é possível.'],
     'aprovacao-garantida': ['aprovado-box', 'Aprovação direta garantida por nota', 'A média mínima já alcança 6,0, mesmo com zero nas avaliações restantes.'],
     'reprovacao-por-nota': ['reprovado-box', 'Média insuficiente por nota', 'Não é possível alcançar média 4,0 com as notas informadas.'],
     'direta-impossivel': ['exame-box', 'Aprovação direta impossível', 'Ainda é possível alcançar o mínimo para acesso ao exame final.'],
@@ -68,21 +67,19 @@ function mostrar(simulacao) {
   html += `<div class="resumo"><div><span>Média mínima possível</span><strong>${fmt(s.minima)}</strong></div><div><span>Média máxima possível</span><strong>${fmt(s.maxima)}</strong></div></div>`;
   if (s.n2 !== null) html += `<p>N2 composta: (${fmt(s.notas.parcial)} + ${fmt(s.notas.institucional)}) ÷ 2 = <strong>${fmt(s.n2)}</strong>.</p>`;
   if (s.completa) html += `<p>Média semestral: (${fmt(s.notas.n1)} + ${fmt(s.n2)}) ÷ 2 = <strong>${fmt(s.media)}</strong>.</p>`;
-  html += `<p>Faltam <strong>${fmt(s.direta.deficit)}</strong> pontos na média semestral para aprovação direta e <strong>${fmt(s.acessoExame.deficit)}</strong> para alcançar o mínimo de 4,0.</p>`;
+  html += `<p class="faltam">Faltam na média: <strong class="${s.direta.deficit > 0 ? 'valor-atencao' : ''}">${fmt(s.direta.deficit)}</strong> para passar e <strong class="${s.acessoExame.deficit > 0 ? 'valor-atencao' : ''}">${fmt(s.acessoExame.deficit)}</strong> para alcançar 4,0.</p>`;
   if (s.faltantes.length) {
-    html += '<p class="nota-info">O intervalo considera de 0 a 10 em cada campo em branco. Campos vazios continuam sem nota definida.</p>';
     html += `<details><summary>Planejar acesso ao exame final</summary>${planoHTML(s.acessoExame, s.faltantes, false)}</details>`;
-    html += '<p class="nota-info">Para realizar o exame, a média semestral precisa ficar abaixo de 6,0. Com 6,0 ou mais, há aprovação direta por nota.</p>';
   }
   if (s.aptoExame) {
-    html += `<section class="plano"><h3>Exame final</h3><p>Você precisa de pelo menos <strong>${fmt(s.exameMinimo)}</strong> no exame para alcançar média final 5,0.</p>`;
+    html += `<section class="plano"><h3>Exame final</h3><p>Você precisa de pelo menos <strong class="valor-atencao">${fmt(s.exameMinimo)}</strong> no exame para alcançar média final 5,0.</p>`;
     if (s.mediaFinal !== null) html += `<p>Média após o exame: (${fmt(s.media)} + ${fmt(s.exame)}) ÷ 2 = <strong>${fmt(s.mediaFinal)}</strong>.</p>`;
     else html += '<p>Preencha a nota do exame para simular a média final.</p>';
     html += '</section>';
   } else if (s.exame !== null) {
     html += '<p class="nota-info">A nota de exame foi preservada. Ela só entra no cálculo quando todas as notas semestrais estiverem preenchidas e a média for de 4,0 a menos de 6,0.</p>';
   }
-  html += '<p class="nota-info">Sugestões mínimas em centésimos são arredondadas para cima. A classificação usa a média sem arredondamento. A frequência e a situação acadêmica oficial devem ser conferidas com a instituição.</p>';
+  html += '<details><summary>Entenda a simulação</summary><p>O intervalo considera de 0 a 10 em cada campo em branco. Campos vazios continuam sem nota definida. As notas restantes podem ser diferentes, respeitando os pesos de cada avaliação.</p><p>O exame exige média de 4,0 a menos de 6,0. Com 6,0 ou mais, há aprovação direta por nota.</p><p>Sugestões mínimas em centésimos são arredondadas para cima. A classificação usa a média sem arredondamento. A frequência e a situação acadêmica oficial devem ser conferidas com a instituição.</p></details>';
   resultado.innerHTML = html;
 }
 
