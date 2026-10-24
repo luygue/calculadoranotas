@@ -22,6 +22,8 @@
       --secondary: #64748b;
       --input: #ffffff;
       --formula: #f1f5f9;
+      --atencao: #b91c1c;
+      --atencao-bg: #fef2f2;
       --shadow: rgba(15, 23, 42, 0.14);
 
       --success-bg: #ecfdf5;
@@ -48,6 +50,8 @@
       --secondary: #475569;
       --input: #111827;
       --formula: #111827;
+      --atencao: #fca5a5;
+      --atencao-bg: #27151d;
       --shadow: rgba(0, 0, 0, 0.4);
 
       --success-bg: #052e1a;
@@ -221,11 +225,11 @@
     }
 
     .resultado {
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 20px;
-      line-height: 1.65;
-      font-size: 16px;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 15px;
       border: 1px solid var(--border);
       background: var(--formula);
       color: var(--text);
@@ -233,7 +237,7 @@
 
     .resultado h2 {
       margin: 0 0 10px 0;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .linha {
@@ -269,10 +273,9 @@
     }
 
     .status {
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 15px;
-      border: 1px solid;
+      margin: 0 0 12px;
+      padding: 0;
+      font-size: 14px;
       font-weight: bold;
     }
 
@@ -320,21 +323,25 @@
     .erro { display: block; color: var(--danger-text); font-size: 13px; line-height: 1.5; margin-top: 6px; }
     input[aria-invalid="true"] { border-color: var(--danger-text); }
     .botoes { grid-template-columns: 1fr 1fr; }
-    .resumo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .resumo > div { border: 1px solid var(--border); border-radius: 15px; padding: 14px; background: var(--card); color: var(--text); }
-    .resumo span { display: block; font-size: 14px; }
-    .resumo strong { display: block; font-size: 26px; overflow-wrap: anywhere; }
-    .plano { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 4px; }
-    h3 { font-size: 18px; margin-bottom: 8px; }
-    .tabela { overflow-x: auto; margin: 16px 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 15px; }
-    th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-    caption { text-align: left; font-weight: bold; margin-bottom: 10px; }
-    .resultado details { font-size: 14px; margin-top: 16px; }
+    .resumo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .resumo > div { border: 1px solid var(--border); border-radius: 12px; padding: 10px; background: var(--card); color: var(--text); }
+    .resumo span { display: block; font-size: 12px; }
+    .resumo strong { display: block; font-size: 21px; overflow-wrap: anywhere; }
+    .plano { border-top: 1px solid var(--border); margin-top: 12px; padding-top: 10px; }
+    .plano h3 { font-size: 15px; margin: 0 0 8px; }
+    .valor-atencao { color: var(--atencao); font-weight: bold; }
+    .notas-necessarias { background: var(--atencao-bg); border-left: 3px solid var(--atencao); border-radius: 8px; padding: 10px 12px; margin: 0; color: var(--text); }
+    .plano > .nota-info { font-size: 13px; margin: 6px 0 10px; }
+    .faltam { font-size: 14px; margin: 10px 0; }
+    .tabela { overflow-x: auto; margin: 10px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 7px 6px; text-align: left; border-bottom: 1px solid var(--border); }
+    caption { text-align: left; font-size: 13px; margin-bottom: 6px; }
+    .resultado details { font-size: 13px; margin-top: 10px; }
+    .resultado summary { padding: 5px 0; }
     @media (max-width: 620px) {
       .grid { grid-template-columns: 1fr; }
       .top-bar { flex-wrap: wrap; }
-      .resumo { grid-template-columns: 1fr; }
       .resultado { padding: 16px; }
     }
     @media (prefers-reduced-motion: reduce) {

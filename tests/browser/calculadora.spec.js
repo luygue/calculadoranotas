@@ -6,6 +6,7 @@ test('prevê com apenas N1 em tempo real, apresenta alternativas e mantém Calcu
   await page.getByLabel('Nota N1', { exact: true }).fill('5,0');
   const resultado = page.getByRole('status');
   await expect(resultado).toContainText('7,0 na Parcial e 7,0 na Prova N2');
+  await resultado.getByText('Ver outras combinações', { exact: true }).first().click();
   const tabela = resultado.getByRole('table').first();
   for (const notas of [['4,0', '10,0'], ['6,0', '8,0'], ['8,0', '6,0'], ['10,0', '4,0']]) {
     await expect(tabela.getByRole('row').filter({ hasText: new RegExp(`^${notas.join('')}6,0$`) })).toHaveCount(1);
@@ -14,7 +15,7 @@ test('prevê com apenas N1 em tempo real, apresenta alternativas e mantém Calcu
   await expect(resultado).toContainText('Média mínima possível2,5');
   await expect(resultado).toContainText('Média máxima possível7,5');
   await page.getByLabel('Parcial N2', { exact: true }).fill('8');
-  await expect(resultado).toContainText('pelo menos 6,0 na Prova N2');
+  await expect(resultado).toContainText('Pelo menos 6,0 na Prova N2');
   await expect(page.locator('#institucional')).toHaveValue('');
 });
 
@@ -22,7 +23,7 @@ test('qualquer ordem de preenchimento e exame final', async ({ page }) => {
   await page.locator('#institucional').fill('8');
   await expect(page.getByRole('status')).toContainText('na N1');
   await page.locator('#parcial').fill('8');
-  await expect(page.getByRole('status')).toContainText('pelo menos 4,0 na N1');
+  await expect(page.getByRole('status')).toContainText('Pelo menos 4,0 na N1');
   await page.locator('#n1').fill('2');
   await expect(page.getByRole('status')).toContainText('Exame final por nota');
   await expect(page.getByRole('status')).toContainText('pelo menos 5,0 no exame');
