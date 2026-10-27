@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Notas | CEUNI Fametro Manaus</title>
-  <meta name="description" content="Simule sua média na Fametro e descubra quanto precisa na N1, Parcial, Prova N2 e exame final." />
+  <title>Calculadora de Notas</title>
+  <meta name="description" content="Simule sua média e descubra quanto precisa na N1, Parcial, Prova N2 e exame final." />
 
   <style>
     * {
@@ -313,7 +313,6 @@
       }
     }
     a { color: var(--primary); }
-    .instituicao { color: var(--muted); line-height: 1.5; }
     summary { cursor: pointer; font-weight: bold; }
     button:focus-visible, summary:focus-visible, a:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
     .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -360,7 +359,6 @@
 
     <div class="hero">
       <h1>Calculadora de Notas</h1>
-      <p class="instituicao">CEUNI Fametro · Manaus · Direito presencial</p>
       <p class="subtitulo">
         Preencha as notas que você já tem. Deixe em branco a nota que ainda não saiu ou que ainda não foi feita.
       </p>
@@ -409,7 +407,7 @@
     <p id="armazenamento" class="nota-info">As notas ficam somente neste navegador quando o armazenamento está disponível. O cálculo é automático.</p>
     <div id="resultado" class="resultado neutro-box" role="status" aria-live="polite" aria-atomic="true"></div>
     <noscript>Ative o JavaScript do navegador para usar a calculadora.</noscript>
-    <small>As notas em branco não são consideradas zero. Esta ferramenta independente não substitui o resultado oficial da Fametro.</small>
+    <small>As notas em branco não são consideradas zero. Esta ferramenta independente não substitui o resultado acadêmico oficial.</small>
   </main>
   <script type="module" src="./js/app.js"></script>
 </body>
